@@ -56,32 +56,45 @@ The current settings are displayed in a box at the top left of the screen (The H
 
 
 
-## Dependencies
+## Quick Start
 
-Python3 OpenCV Must be installed:
+1. Install dependencies (see Installation section below)
+2. Connect the Topdon TC001 thermal camera
+3. Run `python3 src/main.py`
+4. Open `http://localhost:8000` in your browser
 
 
-Run: **sudo apt-get install python3-opencv**
 
+## Installation
 
+Install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Or on Raspberry Pi, install OpenCV via apt:
+
+```bash
+sudo apt-get install python3-opencv
+pip install fastapi uvicorn numpy
+```
 
 ## Running the Program
 
-In src you will find two programs:
+The application now includes a modern **FastAPI web interface** for easy remote access and control.
 
-**tc001-RAW.py** Just demonstrates how to grab raw frames from the Thermal Camera, a starting point if you want to code your own app.
+Navigate to the `src/` directory and run:
 
+```bash
+python3 main.py
+```
 
-**tc001v4.2.py** The main program!
+Then open a web browser and go to `http://localhost:8000` to view the thermal camera feed and control interface.
 
-To run it plug in the thermal camera and run: **v4l2-ctl --list-devices** to list the devices on the system. You will need its device number.
+For more details about the web interface, see `src/README.md`.
 
-Assuming the device number is 0 simply issue: **python3 tc001v4.2.py --device 0**
-
-**Note**
-This is in Alpha. No error checking has been implemented yet! So if the program tries to start, then quits, either a camera is not connected, or you have entered the wrong device number.
-
-Error checking will be implemented after I refactor and optimize the code!
+**Note:** The thermal camera must be connected before starting the application. Use `v4l2-ctl --list-devices` to verify the camera is detected by your system.
 
 
 
