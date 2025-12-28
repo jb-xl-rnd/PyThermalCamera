@@ -1,0 +1,13 @@
+[Unit]
+Description=Thermal Camera Python App
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/PyThermalCamera/new/PyThermalCamera/src/main.py
+WorkingDirectory=/home/pi/PyThermalCamera/new/PyThermalCamera/src
+User=pi
+Group=pi
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

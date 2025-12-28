@@ -1,0 +1,22 @@
+# Add these lines to /boot/firmware/config.txt for Raspberry Pi 5
+# Power saving and stability settings for thermal camera kiosk
+
+# Disable WiFi and Bluetooth to reduce power consumption
+dtoverlay=disable-wifi
+dtoverlay=disable-bt
+
+# Stability settings - reduce power and heat
+arm_boost=0
+arm_freq=1500
+gpu_freq=400
+over_voltage=-4
+gpu_mem=128
+
+# Disable LEDs to save power
+dtparam=act_led_trigger=none
+dtparam=act_led_activelow=off
+dtparam=pwr_led_trigger=none
+dtparam=pwr_led_activelow=off
+
+# Suppress low voltage warnings (use with caution)
+avoid_warnings=1

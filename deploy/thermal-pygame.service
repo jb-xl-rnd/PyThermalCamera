@@ -1,0 +1,35 @@
+[Unit]
+Description=Thermal Camera Pygame Display
+# Wait for everything to be fully ready
+After=graphical.target multi-user.target sound.target
+Wants=graphical.target
+# Conservative restart limits
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Service]
+# idle = start only after all other boot jobs complete
+Type=idle
+User=pi
+Group=pi
+# Display environment
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-1
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+# Long delay to let system fully stabilize after boot
+ExecStartPre=/bin/sleep 30
+# Check that display is actually ready
+ExecStartPre=/bin/sh -c 'until xdpyinfo -display :0 >/dev/null 2>&1 || [ -e /run/user/1000/wayland-1 ]; do sleep 2; done'
+ExecStart=/usr/bin/python3 /home/pi/PyThermalCamera/src/display_hybrid.py
+WorkingDirectory=/home/pi/PyThermalCamera/src
+# Conservative restart - long delay between attempts
+Restart=on-failure
+RestartSec=30
+# Lower CPU/IO priority during startup to reduce power spikes
+Nice=5
+IOSchedulingClass=idle
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=graphical.target

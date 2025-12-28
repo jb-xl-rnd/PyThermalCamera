@@ -1,0 +1,19 @@
+[Unit]
+Description=Chromium Kiosk
+Requires=thermal-camera-app.service
+After=thermal-camera-app.service multi-user.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+ExecStartPre=/bin/sleep 10
+ExecStart=/home/pi/launch-chromium-kiosk.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
